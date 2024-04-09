@@ -75,8 +75,8 @@ asmMult:
      * Use it to test the C test code */
     
     /*** STUDENTS: Place your code BELOW this line!!! **************/
-    mov r10,0			  //storing 0 in r10 to modify the outputs later
-    mov r11,1			  //storing 1 in r11 to modify the outputs later
+    mov r10,0			  /**storing 0 in r10 to modify the outputs later**/
+    mov r11,1			  /**storing 1 in r11 to modify the outputs later**/
     .equ maximum_value_16bits, 32767	/**This is to check whether the input multiplicand and multiplier excced the maximum
 					range of signed 16 bits**/
     .equ minimum_value_16bits, -32768	/**This is to check whether the input multiplicand and multiplier excced the minimum
@@ -120,15 +120,16 @@ asmMult:
 	ldr r5,=a_Abs			/**storing the memory location of a_Abs in r5**/
 	str r0,[r5]			/**storing input r0,multiplicand from C code, in memory location of a_Abs **/
 	b checking_b_sign		/**directing to the checking_b_sign branch**/ 
-    /**This branch is for the negative value of the Multiplicand**/
+    /**This branch is for the time when the sign of the Multiplicand is negative**/
     negative_a:
 	ldr r5,=a_Sign			/**storing the memory location of a_Sign in r5**/
 	str r11,[r5]			/**storing 1 in the memory location of a_Sign**/
 	mvn r6,r0			/**flipping the bits of r0, or doing 1'Complement operation of r0, and store it in r6**/
-	add r6,r6,1			/**adding 1 to r6, and store the result in r6 **/
+	add r6,r6,1			/**adding 1 to r6, and store the result in r6 to get the positive value**/
 	ldr r5,=a_Abs			/**storing the memory location of a_Abs in r5**/
 	str r6,[r5]			/**storing the value of r6,result of 2'complement value of Multiplicand in the
 					memory location of a_Abs**/
+	
     /**This branch is to check the sign of the Multiplier**/
     checking_b_sign:
 	adds r1,r1,0			/**adding r1 to 0 and store the result in r1, and update the flags, to check the Multiplier
@@ -147,12 +148,12 @@ asmMult:
 	beq product_negative		/**if the value of a_Sign is equal to 1,the program will direct to product_negative branch**/
 	/**if the multiplicand sign is positive, or a_Sign is not equal to 1, the program will direct to the product_negative branch**/
 	b mulitiplication_process	/**directing to the mulitiplication_process branch**/
-    /**This branch is for the negative value of the Multiplier**/
+    /**This branch is for the time when the sign of the Multiplier is negative**/
     negative_b:
 	ldr r5,=b_Sign			/**storing the memory location of b_Sign in r5**/
 	str r11,[r5]			/**storing 1 in the memory location of b_Sign**/
-	mvn r6,r1			/**flipping the bits of r1, or doing 1'Complement operation of r0, and store it in r6**/
-	add r6,r6,1			/**adding 1 to r6, and store the result in r6 **/
+	mvn r6,r1			/**flipping the bits of r1, or doing 1'Complement operation of r1, and store it in r6**/
+	add r6,r6,1			/**adding 1 to r6, and store the result in r6 to get the positive value **/
 	ldr r5,=b_Abs			/**storing the memory location of b_Abs in r5**/
 	str r6,[r5]			/**storing the value of r6,result of 2'complement value of Multiplier in the
 					memory location of b_Abs**/
@@ -165,7 +166,7 @@ asmMult:
 	/**if the multiplicand sign is negative, or a_Sign is not equal to 0, the program will direct to the product_negative branch**/
 	b mulitiplication_process	/**directing to the mulitiplication_process branch**/
     
-    /**This branch is for negative product, setting 1 to memory location of prod_Is_Neg**/
+    /**This branch is for negative product, setting 1 to prod_Is_Neg**/
     product_negative:
 	ldr r5,=prod_Is_Neg		/**storing the memory location of prod_Is_Neg in r5**/
 	str r11,[r5]			/**storing 1 in memory location of prod_Is_Neg**/
@@ -189,7 +190,6 @@ asmMult:
     /**This branch is to multiply the absolute values of r0 multiplicand, and r1 Multiplier. Since I use the abosult values of the multiplicand
        and Multiplier, we will get the abosulte value of the product.**/
     mulitiplication_process:
-   
     mov r8,0				/**storing 0 in r8 to store absolute value of the result of the multiplication**/
     ldr r2,=a_Abs			/**storing the memory location of a_Abs in r2**/
     ldr r2,[r2]				/**storing the value of a_Abs, absolute value of multiplicand in r2**/
