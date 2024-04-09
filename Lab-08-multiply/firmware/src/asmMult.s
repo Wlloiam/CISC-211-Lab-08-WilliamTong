@@ -186,8 +186,7 @@ asmMult:
     cmp r1,r6				/**comparing input r1, Multiplier, with minimum_value_16bits**/
     blt error_case			/**if the input r1, Multiplier, is lesser than minimum_value_16bits, the program will direct
 					to the error_case branch**/
-    
-    /**This branch is to multiply the absolute values of r0 multiplicand, and r1 Multiplier. Since I use the abosult values of the multiplicand
+    /**This branch is to multiply the absolute values of r0 multiplicand, and r1 Multiplier. Since use the abosult values of the multiplicand
        and Multiplier, we will get the abosulte value of the product.**/
     mulitiplication_process:
     mov r8,0				/**storing 0 in r8 to store absolute value of the result of the multiplication**/
