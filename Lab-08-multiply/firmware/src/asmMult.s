@@ -81,9 +81,7 @@ asmMult:
 					range of signed 16 bits**/
     .equ minimum_value_16bits, -32768	/**This is to check whether the input multiplicand and multiplier excced the minimum
 					range of signed 16 bits**/
-    .equ test, -32767
    /**Initializing all variables to 0**/
-    ldr r9,=test
     ldr r5,=a_Multiplicand		/**storing the memory location of a_Multiplicand in r5 **/
     str r10,[r5]			/**storing 0 in meomry location of  a_Multiplicand**/
     ldr r5,=b_Multiplier		/**storing the memory location of b_Multiplier in r5 **/
